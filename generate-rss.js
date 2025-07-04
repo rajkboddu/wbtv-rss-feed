@@ -20,7 +20,7 @@ async function generateRSSFeed() {
     const feed = new RSS({
       title: 'WBTV News Feed',
       description: 'Latest news from WBTV Charlotte',
-      feed_url: 'https://yourusername.github.io/your-repo-name/feed.xml',
+      feed_url: 'https://rajkboddu.github.io/wbtv-rss-feed/feed.xml',
       site_url: 'https://www.wbtv.com/news/',
       language: 'en',
       ttl: 60,
