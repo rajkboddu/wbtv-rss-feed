@@ -1,0 +1,35 @@
+name: Generate WBTV RSS Feed
+
+on:
+  schedule:
+    # Run daily at 8 AM EST (13:00 UTC)
+    - cron: '0 13 * * *'
+  workflow_dispatch: # Allow manual triggering
+
+jobs:
+  generate-rss:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        
+    - name: Install dependencies
+      run: |
+        npm install cheerio axios rss
+        
+    - name: Generate RSS Feed
+      run: node generate-rss.js
+      
+    - name: Commit and push RSS file
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git add feed.xml
+        git diff --staged --quiet || git commit -m "Update RSS feed $(date)"
+        git push
